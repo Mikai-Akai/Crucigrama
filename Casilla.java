@@ -15,7 +15,6 @@ import javax.swing.SwingConstants;
 /**
  * The Class Casilla.
  */
-@SuppressWarnings("serial")
 public class Casilla extends JLabel{
 	
 	/** The letra. */
@@ -33,6 +32,7 @@ public class Casilla extends JLabel{
 		this.setFont(font);
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 		this.setOpaque(true);
+		this.setVisible(true);
 	}
 	
 	
@@ -55,7 +55,7 @@ public class Casilla extends JLabel{
 	 */
 	public void setLetra(char letra) {
 		this.letraUsuario = letra;
-		this.setText(String.valueOf(letra));
+		this.setText(String.valueOf(letraUsuario));
 	}
 	
 	/**

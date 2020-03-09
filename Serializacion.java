@@ -41,8 +41,8 @@ public class Serializacion {
 		try {
 			archivoSalida = new FileOutputStream("src/Guardado/ultimaPartida.dat");
 			ObjetoSalida = new ObjectOutputStream(archivoSalida);
-			
 			ObjetoSalida.writeObject(tablero);
+			System.out.print("serializado");
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
