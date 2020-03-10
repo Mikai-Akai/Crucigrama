@@ -13,14 +13,30 @@ package crucigrama;
  */
 public class Proceso {
 	
+	/** The crucigrama. */
 	private Tablero crucigrama;
 	
+	/**
+	 * Instantiates a new proceso.
+	 */
 	Proceso(){
 		crucigrama = new Tablero();
 	}
+	
+	/**
+	 * Cargar tablero.
+	 *
+	 * @param a the a
+	 */
 	public void cargarTablero(Tablero a) {
 		crucigrama = a;
 	}
+	
+	/**
+	 * Gets the tablero.
+	 *
+	 * @return the tablero
+	 */
 	public Tablero gettablero() {
 		return crucigrama;
 	}

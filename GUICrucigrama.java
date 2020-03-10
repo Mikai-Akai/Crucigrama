@@ -7,10 +7,14 @@
  */
 package crucigrama;
 
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.JFrame;
@@ -33,7 +37,7 @@ public class GUICrucigrama extends JFrame{
 		initGUI();
 		this.setTitle("Crucigrama: Conocimiento general");
 		this.pack();
-		this.setResizable(true);
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,8 +62,8 @@ public class GUICrucigrama extends JFrame{
 			System.exit(1);
 		}
 	}
-	private class Escucha implements KeyListener, WindowListener{
-
+	private class Escucha implements WindowListener{
+		private Casilla seleccionada;
 		@Override
 		public void windowActivated(WindowEvent arg0) {
 			// TODO Auto-generated method stub
@@ -72,6 +76,11 @@ public class GUICrucigrama extends JFrame{
 			
 		}
 
+		/**
+		 * Window closing.
+		 *
+		 * @param arg0 the arg 0
+		 */
 		@Override
 		public void windowClosing(WindowEvent arg0) {
 			// TODO Auto-generated method stub
@@ -98,24 +107,6 @@ public class GUICrucigrama extends JFrame{
 
 		@Override
 		public void windowOpened(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void keyPressed(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void keyReleased(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void keyTyped(KeyEvent arg0) {
 			// TODO Auto-generated method stub
 			
 		}

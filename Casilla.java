@@ -9,23 +9,28 @@ package crucigrama;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.Serializable;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
 
 /**
  * The Class Casilla.
  */
-public class Casilla extends JLabel{
+@SuppressWarnings("serial")
+public class Casilla extends JLabel implements Serializable{
 	
-	/** The letra. */
-	private char letraUsuario = ' ';
 	private char letraReal;
+	
 	/**
 	 * Instantiates a new casilla.
+	 *
+	 * @param a the a
 	 */
 	public Casilla(char a) {
 		letraReal = a;
-		this.setPreferredSize(new Dimension(50,50));
+		this.setPreferredSize(new Dimension(27,27));
 		this.setBackground(Color.WHITE);
 		this.setForeground(Color.BLACK);
 		Font font = new Font(Font.DIALOG,Font.BOLD,26);
@@ -33,19 +38,24 @@ public class Casilla extends JLabel{
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 		this.setOpaque(true);
 		this.setVisible(true);
+		
+		if(letraReal == ' '||
+			letraReal == '1'||
+			letraReal == '2'||
+			letraReal == '3'||
+			letraReal == '4'||
+			letraReal == '5'||
+			letraReal == '6'||
+			letraReal == '7'||
+			letraReal == '8') {
+			this.setText(String.valueOf(letraReal));
+			this.setEnabled(false);
+		}
 	}
 	
 	
 	public char getLetraReal() {
 		return letraReal;
-	}
-	/**
-	 * Gets the letra.
-	 *
-	 * @return the letra
-	 */
-	public char getLetraUsuario() {
-		return letraUsuario;
 	}
 	
 	/**
@@ -54,8 +64,14 @@ public class Casilla extends JLabel{
 	 * @param letra the new letra
 	 */
 	public void setLetra(char letra) {
-		this.letraUsuario = letra;
-		this.setText(String.valueOf(letraUsuario));
+		if(this.isEnabled() == true){
+			this.setText(String.valueOf(letra));
+			if(letra != letraReal) {
+				this.setForeground(Color.RED);
+			}else {
+				this.setEnabled(true);
+			}
+		}
 	}
 	
 	/**
