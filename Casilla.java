@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.io.Serializable;
 
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
@@ -19,7 +20,7 @@ import javax.swing.border.TitledBorder;
  * The Class Casilla.
  */
 @SuppressWarnings("serial")
-public class Casilla extends JLabel implements Serializable{
+public class Casilla extends JTextField implements Serializable{
 	
 	private char letraReal;
 	
@@ -39,8 +40,7 @@ public class Casilla extends JLabel implements Serializable{
 		this.setOpaque(true);
 		this.setVisible(true);
 		
-		if(letraReal == ' '||
-			letraReal == '1'||
+		if(	letraReal == '1'||
 			letraReal == '2'||
 			letraReal == '3'||
 			letraReal == '4'||
@@ -49,6 +49,13 @@ public class Casilla extends JLabel implements Serializable{
 			letraReal == '7'||
 			letraReal == '8') {
 			this.setText(String.valueOf(letraReal));
+			this.setFocusable(false);
+			this.setEditable(false);
+			this.setEnabled(false);
+		}
+		if(letraReal == '0') {
+			this.setEditable(false);
+			this.setFocusable(false);
 			this.setEnabled(false);
 		}
 	}

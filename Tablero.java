@@ -34,7 +34,7 @@ public class Tablero extends JPanel implements Serializable{
 	private FileReader lectorArchivo;
 	private BufferedReader entrada;
 	private char[][] matriz = new char[22][12];
-	
+	private char presionado = ' ';
 	/**
 	 * Instantiates a new tablero.
 	 */
@@ -62,7 +62,7 @@ public class Tablero extends JPanel implements Serializable{
 		this.setVisible(true);
 		this.setPreferredSize(new Dimension(200,700));
 		this.setBorder(new TitledBorder(""));
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.BLACK);
 		Container container = this.getRootPane();
 		container = new Container();
 		container.setLayout(new GridBagLayout());
@@ -76,9 +76,12 @@ public class Tablero extends JPanel implements Serializable{
 				auxiliar = new Casilla(matriz[x][y]);
 				auxiliar.addKeyListener(escuchaLetra);
 				auxiliar.addMouseListener(escucha);
-				auxiliar.setVisible(true);
 				if(auxiliar.getLetraReal() != '0') {
 					auxiliar.setBorder(new TitledBorder(""));
+				}else {
+					auxiliar.setFocusable(false);
+					auxiliar.setBackground(Color.BLACK);
+					auxiliar.setForeground(Color.BLACK);
 				}
 				this.add(auxiliar,constraints);
 			}
@@ -104,11 +107,9 @@ public class Tablero extends JPanel implements Serializable{
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// 
-			temporal.setLetra(e.getKeyChar());
-			
-			}
-
+			//
+			presionado = e.getKeyChar();
+		}
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			// 
@@ -119,27 +120,20 @@ public class Tablero extends JPanel implements Serializable{
 		public void mouseEntered(MouseEvent arg0) {
 			// 
 			temporal = (Casilla) arg0.getComponent();
-			if(	temporal.getLetraReal() != '0'&&
-				temporal.getLetraReal() != ' '&&
-				temporal.getLetraReal() != '1'&&
-				temporal.getLetraReal() != '2'&&
-				temporal.getLetraReal() != '3'&&
-				temporal.getLetraReal() != '4'&&
-				temporal.getLetraReal() != '5'&&
-				temporal.getLetraReal() != '6'&&
-				temporal.getLetraReal() != '7'&&
-				temporal.getLetraReal() != '8') {
-				arg0.getComponent().setBackground(Color.LIGHT_GRAY);
-				
-			}
+			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			// 
-			arg0.getComponent().setBackground(Color.WHITE);
-			arg0.getComponent().setForeground(Color.BLACK);
-			arg0.setSource(temporal);
+			//arg0.getComponent().setBackground(Color.WHITE);
+			//arg0.getComponent().setForeground(Color.BLACK);
+			if(arg0.getComponent().isEnabled()) {
+				((Casilla) arg0.getComponent()).setLetra(presionado);
+				arg0.setSource(temporal);
+			}
+			temporal = null;
+			presionado = ' ';
 		}
 
 		@Override
@@ -153,6 +147,5 @@ public class Tablero extends JPanel implements Serializable{
 			// 
 			
 		}
-		
 	}
 }
