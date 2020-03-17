@@ -1,5 +1,5 @@
 /*
- * Programación Interactiva
+ * Programaci�n Interactiva
  * Equipo de trabajo:
  * -Andres Pineda Cortez 1843660-3743
  * -Mateo Obando Gutierrez 1844983-3743
@@ -9,6 +9,11 @@ package crucigrama;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Serializable;
 
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
@@ -18,10 +23,15 @@ import javax.swing.border.TitledBorder;
  * The Class Pistas.
  */
 @SuppressWarnings("serial")
-public class Pistas extends JTextArea {
+public class Pistas extends JTextArea implements Serializable{
+	
+	private FileReader fileRead;
+	private BufferedReader input;
 	
 	/** The pistas. */
-	private String[] pistas = {"Horizontales:\n"
+	//private String[] pistas;
+		
+		/*{"Horizontales:\n"
 			+" \n"
 			+"	1. amigos de lo ajeno.\n"
 			+"	2. el mejor amigo del hombre.\n"
@@ -35,23 +45,56 @@ public class Pistas extends JTextArea {
 			+"Verticales:\n"
 			+" \n"
 			+"	1. elemento con el simbolo quimico [Au].\n"
-			+"	2. aquel que enseña.\n"
+			+"	2. aquel que ense�a.\n"
 			+"	3. felino domestico.\n"
 			+"	4. su picadura contagia el dengue.\n"
 			+"	5. virus 2020 que ha reducido la contaminacion en china.\n"
-			+"	6. lugar de oracion.\n"};
+			+"	6. lugar de oracion.\n"};*/
+		
+	public String lecturaFile() {
+		String texto="";
+		try {
+			fileRead = new FileReader("src/Guardado/Pistas");
+			input = new BufferedReader(fileRead);
+			
+			String linea =input.readLine();
+			while(linea!=null) {
+				texto+=linea;
+				texto+="\n";
+				linea=input.readLine();
+			}	
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				input.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	 return texto;
+	}
 	
 	/**
 	 * Instantiates a new pistas.
 	 */
-	Pistas(){
+	    Pistas(){
 		this.setBorder(new TitledBorder(""));
 		this.setForeground(Color.BLACK);
 		this.setBackground(Color.WHITE);
 		this.setOpaque(true);
 		this.setEditable(false);
-		this.setText(pistas[0]);
-		Font font = new Font(Font.DIALOG,Font.ITALIC,12);
+		lecturaFile();	
+		this.setText(lecturaFile());
+		//this.setText(pistas[0]);
+		Font font = new Font(Font.DIALOG,Font.ITALIC,16);
 		this.setFont(font);
 	}
 }

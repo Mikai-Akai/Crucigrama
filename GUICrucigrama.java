@@ -1,5 +1,5 @@
 /*
- * Programación Interactiva
+ * Programaci�n Interactiva
  * Equipo de trabajo:
  * -Andres Pineda Cortez 1843660-3743
  * -Mateo Obando Gutierrez 1844983-3743
@@ -30,7 +30,6 @@ public class GUICrucigrama extends JFrame{
 	private Pistas pistas = new Pistas();
 	private Tablero crucigrama = proceso.gettablero();
 	private Escucha escucha = new Escucha();
-	private JPanel panelJuego = new JPanel();
 	private Serializacion serializar = new Serializacion();
 	
 	public GUICrucigrama() {
@@ -41,6 +40,7 @@ public class GUICrucigrama extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.addWindowListener(escucha);
 	}
 	private void initGUI() {
 		definirGUI();
@@ -51,12 +51,13 @@ public class GUICrucigrama extends JFrame{
 	}
 	private void definirGUI() {
 		String[] opciones = {"Restaurar Juego", "Nuevo Juego"};
-		String opcionTomada = (String) JOptionPane.showInputDialog(this, "¿Cómo quieres iniciar la ventana?", "Opciones", JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
+		String opcionTomada = (String) JOptionPane.showInputDialog(this, "¿como quieres iniciar la ventana?", "Opciones", JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
 		if(opcionTomada != null) {
 			if(opcionTomada.equals("Restaurar Juego")) {
 				Tablero temporal = serializar.desSerializarObjeto();
 				proceso.cargarTablero(temporal);
 			}else if(opcionTomada.equals("Nuevo Juego")) {
+				proceso.cargarTablero(new Tablero());
 			}
 		}else {
 			System.exit(1);

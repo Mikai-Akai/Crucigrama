@@ -1,5 +1,5 @@
 /*
- * Programación Interactiva
+ * Programaci�n Interactiva
  * Equipo de trabajo:
  * -Andres Pineda Cortez 1843660-3743
  * -Mateo Obando Gutierrez 1844983-3743
@@ -69,7 +69,8 @@ public class Casilla extends JLabel implements Serializable{
 			if(letra != letraReal) {
 				this.setForeground(Color.RED);
 			}else {
-				this.setEnabled(true);
+				this.setForeground(Color.BLUE);
+				this.setEnabled(false);
 			}
 		}
 	}

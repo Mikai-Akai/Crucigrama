@@ -1,5 +1,5 @@
 /*
- * ProgramaciÃ³n Interactiva
+ * Programación Interactiva
  * Equipo de trabajo:
  * -Andres Pineda Cortez 1843660-3743
  * -Mateo Obando Gutierrez 1844983-3743

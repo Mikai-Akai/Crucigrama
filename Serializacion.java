@@ -1,5 +1,5 @@
 /*
- * Programación Interactiva
+ * Programaci�n Interactiva
  * Equipo de trabajo:
  * -Andres Pineda Cortez 1843660-3743
  * -Mateo Obando Gutierrez 1844983-3743
@@ -17,8 +17,9 @@ import java.io.ObjectOutputStream;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Serializacion.
+ * @param <Char>
  */
-public class Serializacion {
+public class Serializacion<Char> {
 	
 	/** The archivo entrada. */
 	private FileInputStream archivoEntrada;
@@ -39,9 +40,9 @@ public class Serializacion {
 	 */
 	public void serializarCrucigrama(Tablero tablero) {
 		try {
-			archivoSalida = new FileOutputStream("src/Guardado/ultimaPartida.dat");
+			archivoSalida = new FileOutputStream("src/Guardado/ultimaPartida");
 			ObjetoSalida = new ObjectOutputStream(archivoSalida);
-			ObjetoSalida.writeObject(tablero);
+			ObjetoSalida.writeObject(tablero.getMatriz());
 			System.out.print("serializado");
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
@@ -55,12 +56,13 @@ public class Serializacion {
 	 *
 	 * @return the casilla[][]
 	 */
+	@SuppressWarnings("finally")
 	public Tablero desSerializarObjeto(){
-		Tablero matriz = null;
+		Tablero matriz = new Tablero();
 		try {
-			archivoEntrada = new FileInputStream("src/Guardado/ultimaPartida.dat");
+			archivoEntrada = new FileInputStream("src/Guardado/ultimaPartida");
 			ObjetoEntrada = new ObjectInputStream(archivoEntrada);
-			matriz = (Tablero) ObjetoEntrada.readObject();
+			matriz = (Tablero) (ObjetoEntrada.readObject());
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
@@ -69,8 +71,7 @@ public class Serializacion {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}finally {
-			
+			return matriz;
 		}
-		return matriz;
 	}
 }

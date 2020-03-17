@@ -1,5 +1,5 @@
 /*
- * Programación Interactiva
+ * Programaci�n Interactiva
  * Equipo de trabajo:
  * -Andres Pineda Cortez 1843660-3743
  * -Mateo Obando Gutierrez 1844983-3743
@@ -11,11 +11,14 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
@@ -25,37 +28,37 @@ public class Tablero extends JPanel implements Serializable{
 	private int columnas = 12;
 	private int filas = 22;
 	private Escucha escucha = new Escucha();
+	private Escucha escuchaLetra = new Escucha();
 	private Casilla auxiliar;
-	Casilla temporal;
-	private char[][] matriz = {
-			{' ',' ',' ',' ',' ',' ',' ',' ','4',' ',' ',' '},
-			{' ',' ',' ',' ',' ',' ',' ',' ','z',' ',' ',' '},
-			{' ',' ',' ',' ',' ',' ',' ','1','a',' ',' ',' '},
-			{' ',' ','1','l','a','d','r','o','n','e','s',' '},
-			{' ',' ',' ','2',' ',' ',' ','r','c',' ',' ',' '},
-			{' ',' ','2','p','e','r','r','o','u',' ',' ',' '},
-			{' ',' ',' ','r',' ',' ',' ',' ','d',' ',' ',' '},
-			{'5','m','i','o',' ',' ',' ',' ','o',' ',' ',' '},
-			{' ',' ',' ','f',' ',' ',' ',' ',' ',' ',' ',' '},
-			{'4','h','u','e','v','o',' ',' ',' ',' ',' ',' '},
-			{' ','3',' ','s','5',' ',' ',' ',' ',' ',' ',' '},
-			{' ','g',' ','o','c',' ',' ',' ',' ',' ',' ',' '},
-			{'3','a','r','r','o','z',' ',' ',' ',' ',' ',' '},
-			{' ','t',' ',' ','r',' ',' ',' ',' ',' ',' ',' '},
-			{' ','o','8','l','o','r','o',' ',' ','6',' ',' '},
-			{' ',' ',' ',' ','n',' ',' ',' ',' ','i',' ',' '},
-			{' ','6','p','l','a','n','t','a','s','g',' ',' '},
-			{' ',' ',' ',' ','v',' ',' ',' ',' ','l',' ',' '},
-			{' ',' ','7','h','i','d','r','o','g','e','n','o'},
-			{' ',' ',' ',' ','r',' ',' ',' ',' ','s',' ',' '},
-			{' ',' ',' ',' ','u',' ',' ',' ',' ','i',' ',' '},
-			{' ',' ',' ',' ','s',' ',' ',' ',' ','a',' ',' '},
-	};
+	private Casilla temporal;
+	private FileReader lectorArchivo;
+	private BufferedReader entrada;
+	private char[][] matriz = new char[22][12];
 	
 	/**
 	 * Instantiates a new tablero.
 	 */
 	Tablero(){
+		String auxLeer = "";
+		char subChar;
+		try {
+			lectorArchivo = new FileReader("src/Guardado/Respuestas");
+			entrada = new BufferedReader(lectorArchivo);
+			for(int y = 0; y < 22;y++) {
+				auxLeer = entrada.readLine();
+				for(int x = 0; x < 12;x++) {
+					subChar = auxLeer.charAt(x);
+					matriz[y][x] = subChar;
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			// 
+			e.printStackTrace();
+		} catch (IOException e) {
+			//
+			e.printStackTrace();
+		}
 		this.setVisible(true);
 		this.setPreferredSize(new Dimension(200,700));
 		this.setBorder(new TitledBorder(""));
@@ -71,10 +74,10 @@ public class Tablero extends JPanel implements Serializable{
 				constraints.gridx = x;
 				constraints.gridy = y;
 				auxiliar = new Casilla(matriz[x][y]);
-				auxiliar.addKeyListener(escucha);
+				auxiliar.addKeyListener(escuchaLetra);
 				auxiliar.addMouseListener(escucha);
 				auxiliar.setVisible(true);
-				if(auxiliar.getLetraReal() != ' ') {
+				if(auxiliar.getLetraReal() != '0') {
 					auxiliar.setBorder(new TitledBorder(""));
 				}
 				this.add(auxiliar,constraints);
@@ -83,37 +86,41 @@ public class Tablero extends JPanel implements Serializable{
 		}
 		
 	}
+	public char[][] getMatriz(){
+		return matriz;
+	}
 	private class Escucha implements KeyListener,MouseListener{
 		
-		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
+			// 
 			
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
+			// 
 			
 		}
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
+			// 
 			temporal.setLetra(e.getKeyChar());
-		}
+			
+			}
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			// 
 			
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			// 
 			temporal = (Casilla) arg0.getComponent();
-			if(temporal.getLetraReal() != ' '&&
+			if(	temporal.getLetraReal() != '0'&&
+				temporal.getLetraReal() != ' '&&
 				temporal.getLetraReal() != '1'&&
 				temporal.getLetraReal() != '2'&&
 				temporal.getLetraReal() != '3'&&
@@ -123,24 +130,27 @@ public class Tablero extends JPanel implements Serializable{
 				temporal.getLetraReal() != '7'&&
 				temporal.getLetraReal() != '8') {
 				arg0.getComponent().setBackground(Color.LIGHT_GRAY);
+				
 			}
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			// 
 			arg0.getComponent().setBackground(Color.WHITE);
+			arg0.getComponent().setForeground(Color.BLACK);
+			arg0.setSource(temporal);
 		}
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			// 
 			
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			// 
 			
 		}
 		
